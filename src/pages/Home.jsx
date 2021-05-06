@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { QuestionCard } from "../comps/Question";
 
 export const Home = () => {
   const [person, setPerson] = useState("Justin");
@@ -10,7 +11,7 @@ export const Home = () => {
         return res.json();
       })
       .then((res) => {
-        setQuestions(res);
+        setQuestions(res.results);
       });
   }, []);
 
@@ -18,6 +19,11 @@ export const Home = () => {
     <div>
       <h1>Hello {person}</h1>
       <button onClick={() => setPerson("Cliff")}>Click here</button>
+      {questions.length > 0
+        ? questions.map((question) => {
+            return <QuestionCard {...question} />;
+          })
+        : ""}
       <p>{JSON.stringify(questions)}</p>
     </div>
   );
